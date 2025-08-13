@@ -9,7 +9,10 @@
 
 		zls = {
 			url = "git+file:/home/droid/src/zls";
-			inputs.nixpkgs.follows = "nixpkgs";
+			inputs = {
+        nixpkgs.follows = "nixpkgs";
+        zig-overlay.follows = "zig";
+      };
 		};
 
     gitignore = {
