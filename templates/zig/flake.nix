@@ -8,7 +8,7 @@
 		};
 
 		zls = {
-			url = "git+file:/home/droid/src/zls";
+			url = "github:zigtools/zls";
 			inputs = {
         nixpkgs.follows = "nixpkgs";
         zig-overlay.follows = "zig";
