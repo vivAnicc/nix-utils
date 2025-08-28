@@ -6,12 +6,22 @@
     pkgs = import nixpkgs {
       inherit system;
     };
-    stdenv = pkgs.stdenvNoCC;
+    pkgToAttr = p: { name = p.name; value = p; };
+    pkgsToList = ps: builtins.map pkgToAttr ps;
+    packages = import ./packages.nix pkgs;
+    pkgList = pkgsToList packages;
+    pkgsString = builtins.foldl' (a: b:
+      "${a}" + "\n" + "${b}"
+    ) "" packages;
   in {
-    packages.aarch64-linux.default = stdenv.mkDerivation {
+    packages.aarch64-linux.default = derivation ({
+      inherit system;
       name = "saved-packages";
 
-      buildInputs = import ./packages.nix pkgs;
-    };
+      contents = pkgsString;
+
+      builder = "${pkgs.bash}/bin/bash";
+      args = ["-c" "echo $contents > $out"];
+    } // builtins.listToAttrs pkgList);
   };
 }
