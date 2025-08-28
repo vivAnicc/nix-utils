@@ -1,1 +1,2 @@
 pkgs: with pkgs; [] 
+++ [tree]
