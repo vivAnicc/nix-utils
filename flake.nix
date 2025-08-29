@@ -4,6 +4,7 @@
   outputs = { ... }: {
 		templates = {
 			zig.path = templates/zig;
+			haskell.path = templates/haskell;
 		};
 	};
 }
