@@ -30,8 +30,9 @@
 			};
 			zig-pkg = zig.packages.aarch64-linux.master;
 			zls-pkg = zls.packages.aarch64-linux.zls;
+      name = "zig-project";
 		in {
-			devShell.aarch64-linux = pkgs.mkShellNoCC {
+			devShell.${system} = pkgs.mkShellNoCC {
 				packages = [
 					pkgs.lldb
 					zig-pkg
@@ -39,8 +40,8 @@
 				];
 			};
 
-			defaultPackage.aarch64-linux = pkgs.stdenvNoCC.mkDerivation {
-				name = "zig";
+			defaultPackage.${system} = pkgs.stdenvNoCC.mkDerivation {
+				inherit name;
 				version = "0.0";
 
 				src = gitignore.lib.gitignoreSource ./.;
