@@ -19,11 +19,15 @@
 			url = "github:hercules-ci/gitignore.nix";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+    nix-utils = {
+      url = "github:vivAnicc/nix-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 	};
 
-	outputs = { nixpkgs, zig, zls, gitignore, ... }:
-		let
-			system = "aarch64-linux";
+	outputs = { nixpkgs, nix-utils, zig, zls, gitignore, ... }:
+    nix-utils.lib.mkFlake (system: let
 			pkgs = import nixpkgs {
 				inherit system;
 				config = {};
@@ -65,5 +69,5 @@
 					runHook postCheck
 				'';
 			};
-		};
+		});
 }
