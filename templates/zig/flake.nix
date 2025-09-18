@@ -32,8 +32,8 @@
 				inherit system;
 				config = {};
 			};
-			zig-pkg = zig.packages.aarch64-linux.master;
-			zls-pkg = zls.packages.aarch64-linux.zls;
+			zig-pkg = zig.packages.${system}.master;
+			zls-pkg = zls.packages.${system}.zls;
       name = "zig-project";
 		in {
 			devShell.${system} = pkgs.mkShellNoCC {
