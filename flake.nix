@@ -16,8 +16,15 @@
     };
 
 		templates = {
-			zig.path = templates/zig;
-			haskell.path = templates/haskell;
+			zig = {
+        path = templates/zig;
+        description = "Template for a zig project";
+      };
+
+			haskell = {
+        path = templates/haskell;
+        description = "Template for an haskell project";
+      };
 		};
 	};
 }
