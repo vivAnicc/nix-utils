@@ -17,6 +17,7 @@
       pascal_case_name = pkgs.lib.concatStrings ([first] ++ rest);
     in {
       packages.${system} = {
+        # Remember to copy Assembly-CSharp.dll in lib/
         default = self.packages.${system}.${name};
 
         ${name} = derivation {
