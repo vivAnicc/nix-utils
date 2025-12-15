@@ -1,8 +1,14 @@
 {
-	inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+	inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    neovim = {
+      url = "github:vivAnicc/neovim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
-  outputs = { nixpkgs, ... }: {
-    lib = import ./lib.nix nixpkgs;
+  outputs = { nixpkgs, neovim, ... }: {
+    lib = import ./lib.nix {inherit nixpkgs neovim;};
 
 		templates = {
 			zig = {

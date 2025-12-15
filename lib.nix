@@ -1,4 +1,4 @@
-nixpkgs: let 
+{ nixpkgs, neovim }: let 
   systems = [
    "aarch64-linux"
    "x86_64-linux"
@@ -7,6 +7,27 @@ nixpkgs: let
 in rec {
   mkFlake = (fn:
     builtins.foldl' lib.attrsets.recursiveUpdate {} (builtins.map fn systems)
+  );
+
+  mkNeovim = (
+    {
+      system,
+      lsp ? [],
+      extraPkgs ? [],
+    }: let
+      pkgs = import nixpkgs {inherit system;};
+    parsers = lib.mapAttrsToList
+      (_: a: a) 
+      pkgs.vimPlugins.nvim-treesitter-parsers;
+    parsers-pkgs = lib.filter
+      lib.isDerivation
+      parsers;
+    in pkgs.buildEnv {
+      name = "neovim";
+      paths = parsers-pkgs ++ extraPkgs ++ [
+        neovim.packages.${system}.nvim
+      ];
+    }
   );
 
   mkDerivation = ({
