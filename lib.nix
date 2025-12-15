@@ -41,7 +41,7 @@ in rec {
       nvim = nixvim'.makeNixvimWithModule nixvimModule;
     in pkgs.buildEnv {
       name = "nvim";
-      paths = parsers-pkgs ++ extraPkgs ++ [nvim, pkgs.ripgrep];
+      paths = parsers-pkgs ++ extraPkgs ++ [nvim pkgs.ripgrep];
     }
   );
 
@@ -79,7 +79,10 @@ in rec {
     in if system != null
     then withSystem system
     else mkFlake (system: {
-      ${system} = withSystem system;
+      ${system} = {
+        ${name} = withSystem system;
+        default = withSystem system;
+      };
     })
   );
 }
