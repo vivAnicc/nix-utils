@@ -24,8 +24,12 @@ in rec {
         lib.isDerivation
         parsers;
       nixvim' = nixvim.legacyPackages.${system};
+      lspConfig = builtins.listToAttrs (builtins.map (name: {
+        inherit name;
+        value.enable = true;
+      }) lsp);
       nixvimConfig = lib.recursiveUpdate neovim.nixvimModules.default {
-        lsp.server = lib.listToAttrs lsp (_: { enable = true; } );
+        lsp.servers = lspConfig;
       };
       nixvimModule = {
         inherit system;
