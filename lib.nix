@@ -23,7 +23,7 @@ in rec {
       lib.isDerivation
       parsers;
     in pkgs.buildEnv {
-      name = "neovim";
+      name = "nvim";
       paths = parsers-pkgs ++ extraPkgs ++ [
         neovim.packages.${system}.nvim
       ];
