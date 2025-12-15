@@ -1,4 +1,4 @@
-{ nixpkgs, neovim }: let 
+{ nixpkgs, neovim, nixvim, ... }: let 
   systems = [
    "aarch64-linux"
    "x86_64-linux"
@@ -14,19 +14,31 @@ in rec {
       system,
       lsp ? [],
       extraPkgs ? [],
-    }: let
+    }: 
+    let
       pkgs = import nixpkgs {inherit system;};
-    parsers = lib.mapAttrsToList
-      (_: a: a) 
-      pkgs.vimPlugins.nvim-treesitter-parsers;
-    parsers-pkgs = lib.filter
-      lib.isDerivation
-      parsers;
-    in pkgs.buildEnv {
-      name = "neovim";
-      paths = parsers-pkgs ++ extraPkgs ++ [
-        neovim.packages.${system}.nvim
+      parsers = lib.mapAttrsToList
+        (_: a: a) 
+        pkgs.vimPlugins.nvim-treesitter-parsers;
+      parsers-pkgs = lib.filter
+        lib.isDerivation
+        parsers;
+      nixvim' = nixvim.legacyPackages.${system};
+      nixvimConfig = lib.mergeModules [
+        neovim.nixvimModules.default
+        {
+          lsp.server = lib.listToAttrs lsp (_: { enable = true; } );
+        }
       ];
+      nixvimModule = {
+        inherit system;
+        module = nixvimConfig;
+        # extraSpecialArgs = {};
+      };
+      nvim = nixvim'.makeNixvimWithModule nixvimModule;
+    in pkgs.buildEnv {
+      name = "nvim";
+      paths = parsers-pkgs ++ extraPkgs ++ [nvim];
     }
   );
 
