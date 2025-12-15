@@ -24,12 +24,9 @@ in rec {
         lib.isDerivation
         parsers;
       nixvim' = nixvim.legacyPackages.${system};
-      nixvimConfig = lib.mergeModules [
-        neovim.nixvimModules.default
-        {
-          lsp.server = lib.listToAttrs lsp (_: { enable = true; } );
-        }
-      ];
+      nixvimConfig = lib.recursiveUpdate neovim.nixvimModules.default {
+        lsp.server = lib.listToAttrs lsp (_: { enable = true; } );
+      };
       nixvimModule = {
         inherit system;
         module = nixvimConfig;
