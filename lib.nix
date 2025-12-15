@@ -14,6 +14,7 @@ in rec {
       system,
       lsp ? [],
       extraPkgs ? [],
+      extraConfig ? {},
     }: 
     let
       pkgs = import nixpkgs {inherit system;};
@@ -28,9 +29,10 @@ in rec {
         inherit name;
         value.enable = true;
       }) lsp);
-      nixvimConfig = lib.recursiveUpdate neovim.nixvimModules.default {
-        lsp.servers = lspConfig;
-      };
+      nixvimConfig = lib.recursiveUpdate extraConfig
+        (lib.recursiveUpdate neovim.nixvimModules.default {
+          lsp.servers = lspConfig;
+        });
       nixvimModule = {
         inherit system;
         module = nixvimConfig;
@@ -39,7 +41,7 @@ in rec {
       nvim = nixvim'.makeNixvimWithModule nixvimModule;
     in pkgs.buildEnv {
       name = "nvim";
-      paths = parsers-pkgs ++ extraPkgs ++ [nvim];
+      paths = parsers-pkgs ++ extraPkgs ++ [nvim, pkgs.ripgrep];
     }
   );
 
