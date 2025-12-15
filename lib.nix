@@ -1,0 +1,49 @@
+nixpkgs: let 
+  systems = [
+   "aarch64-linux"
+   "x86_64-linux"
+  ];
+  lib = nixpkgs.lib;
+in rec {
+  mkFlake = (fn:
+    builtins.foldl' lib.attrsets.recursiveUpdate {} (builtins.map fn systems)
+  );
+
+  mkDerivation = ({
+      name,
+      version ? "v0",
+      system ? null,
+      packages ? [],
+      script,
+      src,
+    }:
+    let
+      withSystem = (system:
+        let
+          pkgs = import nixpkgs {inherit system;};
+          paths = packages ++ [
+            pkgs.bash
+            pkgs.coreutils
+          ];
+          env = pkgs.buildEnv {
+            name = name + "-env";
+            inherit paths;
+          };
+        in derivation {
+          inherit name version system;
+          builder = "${pkgs.bash}/bin/bash";
+          args = [ "-c" (# bash
+            ''
+              export PATH=${env}/bin:$PATH
+              export src=${src}
+            '' + script
+          )];
+        }
+      );
+    in if system != null
+    then withSystem system
+    else mkFlake (system: {
+      ${system} = withSystem system;
+    })
+  );
+}
