@@ -41,7 +41,7 @@ in rec {
       nvim = nixvim'.makeNixvimWithModule nixvimModule;
     in pkgs.buildEnv {
       name = "nvim";
-      paths = parsers-pkgs ++ extraPkgs ++ [nvim pkgs.ripgrep];
+      paths = parsers-pkgs ++ extraPkgs ++ [nvim pkgs.ripgrep pkgs.imagemagick];
     }
   );
 
