@@ -1,5 +1,0 @@
-dependencies:
-  - base == 4.*
-executables:
-  hc:
-    main: Main.hs

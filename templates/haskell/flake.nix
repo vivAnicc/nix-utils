@@ -1,33 +1,27 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs";
-    nix-utils = {
-      url = "github:vivAnicc/nix-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    utils.url = "github:vivAnicc/nix-utils";
   };
 
-  outputs = { self, nix-utils, nixpkgs }:
-    nix-utils.lib.mkFlake (system: let
+  outputs = { utils, nixpkgs, ... }:
+    utils.lib.mkFlake (system: let
       pkgs = import nixpkgs {
         inherit system;
-        config = {};
       };
-      name = "haskell-project";
-    in {
-      packages.${system} = {
-        default = self.packages.${system}.${name};
+      name = "haskell";
+    in rec {
+      packages.${system}.${name} = devShell.${system};
+      
+      devShell.${system} = pkgs.haskellPackages.developPackage {
+        root = ./.;
+        returnShellEnv = true;
 
-        ${name} = pkgs.haskellPackages.callCabal2nix name ./. {};
-      };
-      devShell = pkgs.haskellPackages.shellFor {
-        packages = p: [self.packages.${system}.${name}];
-        withHoogle = true;
-        buildInputs = with pkgs.haskellPackages; [
-          haskell-language-server
-          ghcid
-          cabal-install
-        ];
+        modifier = drv:
+          pkgs.haskell.lib.addBuildTools drv [
+            pkgs.haskellPackages.cabal-install
+            pkgs.haskellPackages.ghcid
+          ];
       };
     });
 }
