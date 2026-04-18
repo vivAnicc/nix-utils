@@ -1,31 +1,37 @@
 {
-	inputs = {
+  inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixvim.url = "github:nix-community/nixvim";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     neovim = {
       url = "github:vivAnicc/neovim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+	nixpkgs.follows = "nixpkgs";
+	nixvim.follows = "nixvim";
+      };
     };
   };
 
   outputs = inputs: {
     lib = import ./lib.nix inputs;
 
-		templates = {
-			zig = {
+    templates = {
+      zig = {
         path = templates/zig;
         description = "Template for a zig project";
       };
 
-			unity-mod = {
+      unity-mod = {
         path = templates/unity-mod;
         description = "Template for a unity mod";
       };
 
-			haskell = {
+      haskell = {
         path = templates/haskell;
         description = "Template for an haskell project";
       };
-		};
-	};
+    };
+  };
 }
