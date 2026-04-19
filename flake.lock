@@ -32,11 +32,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1776518956,
-        "narHash": "sha256-HDwkSBrU8IFaZEkn1ecQby0U4mA7TfDLaH7aYlP/B94=",
+        "lastModified": 1776606702,
+        "narHash": "sha256-Iv84f0J/YlYINrx+CHs693JVSWDphMtaqb9EIAjIazY=",
         "owner": "vivAnicc",
         "repo": "neovim",
-        "rev": "02d49c101f0294ddf5ad18afe52ba79576580e71",
+        "rev": "bb473248c36c5ec72944c009935d16a23ed4be44",
         "type": "github"
       },
       "original": {
