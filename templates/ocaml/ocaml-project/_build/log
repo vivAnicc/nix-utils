@@ -1,0 +1,27 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /home/nick/.cache/dune/db
+# Workspace root: /home/nick/explore/ocaml/ocaml-project
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlc.opt -config > /tmp/nix-shell.UpdtVK/dune_b366d7_output
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -w -53 -w -49 -nopervasives -nostdlib -g -bin-annot -bin-annot-occurrences -I lib/.ocaml_project.objs/byte -no-alias-deps -opaque -o lib/.ocaml_project.objs/byte/ocaml_project.cmo -c -impl lib/ocaml_project.ml-gen)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -a -o lib/ocaml_project.cma lib/.ocaml_project.objs/byte/ocaml_project.cmo)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I bin/.main.eobjs/byte -I lib/.ocaml_project.objs/byte -no-alias-deps -opaque -o bin/.main.eobjs/byte/dune__exe__Main.cmi -c -intf bin/main.mli)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlc.opt -short-paths -keep-locs -warn-error +a -g -bin-annot -bin-annot-occurrences -I test/.test_ocaml_project.eobjs/byte -I lib/.ocaml_project.objs/byte -no-alias-deps -opaque -o test/.test_ocaml_project.eobjs/byte/dune__exe__Test_ocaml_project.cmi -c -intf test/test_ocaml_project.mli)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -w -53 -w -49 -nopervasives -nostdlib -g -I lib/.ocaml_project.objs/byte -I lib/.ocaml_project.objs/native -cmi-file lib/.ocaml_project.objs/byte/ocaml_project.cmi -no-alias-deps -opaque -o lib/.ocaml_project.objs/native/ocaml_project.cmx -c -impl lib/ocaml_project.ml-gen)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -I test/.test_ocaml_project.eobjs/byte -I test/.test_ocaml_project.eobjs/native -I lib/.ocaml_project.objs/byte -I lib/.ocaml_project.objs/native -cmi-file test/.test_ocaml_project.eobjs/byte/dune__exe__Test_ocaml_project.cmi -no-alias-deps -opaque -o test/.test_ocaml_project.eobjs/native/dune__exe__Test_ocaml_project.cmx -c -impl test/test_ocaml_project.ml)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.ocaml_project.objs/byte -I lib/.ocaml_project.objs/native -cmi-file bin/.main.eobjs/byte/dune__exe__Main.cmi -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -a -o lib/ocaml_project.cmxa lib/.ocaml_project.objs/native/ocaml_project.cmx)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -shared -linkall -I lib -o lib/ocaml_project.cmxs lib/ocaml_project.cmxa)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -o bin/main.exe lib/ocaml_project.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ (cd _build/default && /nix/store/14nbg9kalx0fzg412ibngwgpfjahcq2b-ocaml-5.4.1/bin/ocamlopt.opt -short-paths -keep-locs -warn-error +a -g -o test/test_ocaml_project.exe lib/ocaml_project.cmxa test/.test_ocaml_project.eobjs/native/dune__exe__Test_ocaml_project.cmx)

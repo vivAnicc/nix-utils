@@ -32,6 +32,11 @@
         path = templates/haskell;
         description = "Template for an haskell project";
       };
+
+      ocaml = {
+        path = templates/ocaml;
+        description = "Template for an OCaml project";
+      };
     };
   };
 }
