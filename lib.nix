@@ -18,14 +18,8 @@ in rec {
     }: 
     let
       pkgs = import nixpkgs {inherit system;};
-      parsers = lib.mapAttrsToList
-        (_: a: a) 
-        pkgs.vimPlugins.nvim-treesitter-parsers;
-      parsers-pkgs = lib.filter
-        lib.isDerivation
-        parsers;
       nixvim' = nixvim.legacyPackages.${system};
-      lspConfig = builtins.listToAttrs (builtins.map (name: {
+      lspConfig = builtins.listToAttrs (map (name: {
         inherit name;
         value.enable = true;
       }) lsp);
@@ -41,7 +35,7 @@ in rec {
       nvim = nixvim'.makeNixvimWithModule nixvimModule;
     in pkgs.buildEnv {
       name = "nvim";
-      paths = parsers-pkgs ++ extraPkgs ++ [nvim pkgs.ripgrep pkgs.imagemagick];
+      paths = pkgs.vimPlugins.nvim-treesitter.allGrammars ++ extraPkgs ++ [nvim pkgs.ripgrep pkgs.imagemagick];
     }
   );
 
