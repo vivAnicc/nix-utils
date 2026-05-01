@@ -6,7 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim = {
-      url = "github:vivAnicc/nvf";
+      url = "github:vivAnicc/neovim-nvf";
       inputs = {
 	nixpkgs.follows = "nixpkgs";
 	nvf.follows = "nvf";
