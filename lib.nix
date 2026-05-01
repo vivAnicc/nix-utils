@@ -1,4 +1,4 @@
-{ nixpkgs, neovim, nixvim, ... }: let 
+{ nixpkgs, neovim, nvf, ... }: let 
   systems = [
    "aarch64-linux"
    "x86_64-linux"
@@ -18,24 +18,20 @@ in rec {
     }: 
     let
       pkgs = import nixpkgs {inherit system;};
-      nixvim' = nixvim.legacyPackages.${system};
       lspConfig = builtins.listToAttrs (map (name: {
         inherit name;
         value.enable = true;
       }) lsp);
-      nixvimConfig = lib.recursiveUpdate extraConfig
-        (lib.recursiveUpdate neovim.nixvimModules.default {
-          lsp.servers = lspConfig;
-        });
-      nixvimModule = {
-        inherit system;
-        module = nixvimConfig;
-        # extraSpecialArgs = {};
+      extraModule = lib.recursiveUpdate extraConfig {
+	vim.lsp.presets = lspConfig;
       };
-      nvim = nixvim'.makeNixvimWithModule nixvimModule;
+      config = nvf.lib.neovimConfiguration {
+	inherit pkgs;
+	modules = neovim.nvfModules ++ [ extraModule ];
+      };
     in pkgs.buildEnv {
       name = "nvim";
-      paths = pkgs.vimPlugins.nvim-treesitter.allGrammars ++ extraPkgs ++ [nvim pkgs.ripgrep pkgs.imagemagick];
+      paths = extraPkgs ++ [ config.neovim ];
     }
   );
 

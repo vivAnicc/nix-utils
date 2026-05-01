@@ -1,15 +1,15 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixvim = {
-      url = "github:nix-community/nixvim";
+    nvf = {
+      url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim = {
-      url = "github:vivAnicc/neovim";
+      url = "github:vivAnicc/nvf";
       inputs = {
 	nixpkgs.follows = "nixpkgs";
-	nixvim.follows = "nixvim";
+	nvf.follows = "nvf";
       };
     };
   };
