@@ -108,11 +108,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1777755582,
-        "narHash": "sha256-5gdeOymDnUV3aZ4CLnQQNOW6OwTYk4l2LMmkYn2A3kU=",
+        "lastModified": 1777755897,
+        "narHash": "sha256-v0QPWbn+StGWXWP11lXJKWp25x+B4kESVMuwZrydyYg=",
         "owner": "vivAnicc",
         "repo": "neovim-nvf",
-        "rev": "2ca28ad17ef3e98118895a1e40f16dce4110a20c",
+        "rev": "2608aca37b703023d79868fcaf9c5db546aeeb94",
         "type": "github"
       },
       "original": {
